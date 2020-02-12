@@ -64,6 +64,11 @@
     state: absent
     path: "/tmp/overcloud-nodes/"
 
+- name: "Remove any previous instackenv.json file created."
+  file:
+    state: absent
+    path: "/root/instackenv.json"
+
 - name: "Create list of overcloud nodes from dict"
   shell:
     cmd: "echo {{item.key}} >>/tmp/overcloud-nodes"
@@ -85,4 +90,3 @@
   args:
     chdir: "/root/"
 
-  
