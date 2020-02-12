@@ -10,6 +10,8 @@ undercloud_packages:
 OSP_IRONIC_TAR: "/usr/share/rhosp-director-images/overcloud-full-latest-13.0.tar"
 OSP_IMAGES_TAR: "/usr/share/rhosp-director-images/ironic-python-agent.tar"
 OSP_DEFAULT_ROOT_PASS: "password"
+OSP_VMBC_DEFAULT_USER: "admin"
+OSP_VMBC_DEFAULT_PASS: "password"
 
 OSP_NODES:
   - controller-0.example.com:

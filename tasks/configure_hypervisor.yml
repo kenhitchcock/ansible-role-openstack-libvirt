@@ -14,10 +14,13 @@
   loop: 
     - python2-pip
 
+#pip install virtualbmc
+#pip install --upgrade pip
 - name: "Install virtualbmc"
   pip:
     name: virtualbmc
 
+#virt-install --name ctrl01-overcloud.example.com --memory 16384 --vcpu 8 --cpu host --disk size=60,format=qcow2,bus=virtio --network bridge=virbr0,model=virtio --os-type=linux --pxe --noautoconsole
 - name: "Create the VM Container from Dict"
   shell:
     cmd: "virt-install --name {{item.key}} \
@@ -27,10 +30,15 @@
           --network bridge={{item.value.network}},model=virtio \
           --os-type=linux --pxe --noautoconsole"
   loop: "{{OSP_NODES}}"
-#pip install virtualbmc
-#pip install --upgrade pip
-
-#virt-install --name ctrl01-overcloud.example.com --memory 16384 --vcpu 8 --cpu host --disk size=60,format=qcow2,bus=virtio --network bridge=virbr0,model=virtio --os-type=linux --pxe --noautoconsole
 
 #vbmc add ctrl01-overcloud.example.com --port 6231 --username admin --password password
+- name: "Create VMBC entries"
+  shell:
+    cmd: "vbmc add {{item.key}} --port {{item.value.vbmcport}}} --username {{OSP_VMBC_DEFAULT_USER}} --password {{OSP_VMBC_DEFAULT_PASS}}"
+  loop: "{{OSP_NODES}}"
+
 #vbmc start ctrl01-overcloud.example.com
+- name: "Create VMBC entries"
+  shell:
+    cmd: "vbmc start {{item.key}}"
+  loop: "{{OSP_NODES}}"
