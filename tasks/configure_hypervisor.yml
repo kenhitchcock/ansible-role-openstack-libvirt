@@ -57,3 +57,31 @@
     jump: ACCEPT
   with_dict: "{{OSP_NODES}}"
   ignore_errors: true
+
+- name: "Remove any previous file created."
+  file:
+    state: absent
+    path: "/tmp/overcloud-nodes/"
+
+- name: "Create list of overcloud nodes from dict"
+  shell:
+    cmd: "echo {{item.key}} >>/tmp/overcloud-nodes"
+  with_dict: "{{OSP_NODES}}"
+  ignore_errors: true
+
+- name: "Copy create_instackenv.sh script"
+  copy:
+    src: files/create_instackenv.sh
+    dest: /root/create_instackenv.sh
+    owner: root
+    group: root
+    mode: '0750'
+
+
+- name: "Create instackenv.json"
+  shell:
+    cmd: "./create_instackenv.sh"
+  args:
+    chdir: "/root/"
+
+  
