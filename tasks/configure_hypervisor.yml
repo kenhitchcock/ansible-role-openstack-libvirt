@@ -14,6 +14,7 @@
   loop: 
     - python2-pip
     - gcc
+    - python-devel-2.7*
 
 #pip install virtualbmc
 #pip install --upgrade pip
