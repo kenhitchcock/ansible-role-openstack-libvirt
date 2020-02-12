@@ -31,16 +31,16 @@
           --disk size={{item.value.disk}},format=qcow2,bus=virtio \
           --network bridge={{item.value.network}},model=virtio \
           --os-type=linux --pxe --noautoconsole"
-  loop: "{{OSP_NODES}}"
+  with_dict: "{{OSP_NODES}}"
 
 #vbmc add ctrl01-overcloud.example.com --port 6231 --username admin --password password
 - name: "Create VMBC entries"
   shell:
     cmd: "vbmc add {{item.key}} --port {{item.value.vbmcport}}} --username {{OSP_VMBC_DEFAULT_USER}} --password {{OSP_VMBC_DEFAULT_PASS}}"
-  loop: "{{OSP_NODES}}"
+  with_dict: "{{OSP_NODES}}"
 
 #vbmc start ctrl01-overcloud.example.com
 - name: "Create VMBC entries"
   shell:
     cmd: "vbmc start {{item.key}}"
-  loop: "{{OSP_NODES}}"
+  with_dict: "{{OSP_NODES}}"
