@@ -44,3 +44,13 @@
   shell:
     cmd: "vbmc start {{item.key}}"
   with_dict: "{{OSP_NODES}}"
+
+- name: "Iptables configuration"
+  iptables:
+    chain: INPUT
+    protocol: udp
+    destination_port: "{{item.value.vbmcport}}"
+    ctstate: NEW
+    syn: match
+    jump: ACCEPT
+  with_dict: "{{OSP_NODES}}"
