@@ -15,6 +15,7 @@
     - python2-pip
     - gcc
     - python-devel-2.7*
+    - jq
 
 #pip install virtualbmc
 #pip install --upgrade pip
