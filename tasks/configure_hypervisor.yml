@@ -32,18 +32,21 @@
           --network bridge={{item.value.network}},model=virtio \
           --os-type=linux --pxe --noautoconsole"
   with_dict: "{{OSP_NODES}}"
+  ignore_errors: true
 
 #vbmc add ctrl01-overcloud.example.com --port 6231 --username admin --password password
 - name: "Create VMBC entries"
   shell:
     cmd: "vbmc add {{item.key}} --port {{item.value.vbmcport}} --username {{OSP_VMBC_DEFAULT_USER}} --password {{OSP_VMBC_DEFAULT_PASS}}"
   with_dict: "{{OSP_NODES}}"
+  ignore_errors: true
 
 #vbmc start ctrl01-overcloud.example.com
 - name: "Create VMBC entries"
   shell:
     cmd: "vbmc start {{item.key}}"
   with_dict: "{{OSP_NODES}}"
+  ignore_errors: true
 
 - name: "Iptables configuration"
   iptables:
@@ -51,6 +54,6 @@
     protocol: udp
     destination_port: "{{item.value.vbmcport}}"
     ctstate: NEW
-    syn: match
     jump: ACCEPT
   with_dict: "{{OSP_NODES}}"
+  ignore_errors: true
