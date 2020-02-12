@@ -1,3 +1,3 @@
 
-- name: "Build VMs"
-  include_tasks: configure_undercloud.yml
+- name: "Hypervisor prereqs and build VMs"
+  include_tasks: configure_hypervisor.yml
