@@ -38,7 +38,7 @@
 #vbmc add ctrl01-overcloud.example.com --port 6231 --username admin --password password
 - name: "Create VMBC entries"
   shell:
-    cmd: "vbmc add {{item.key}} --port {{item.value.vbmcport}} --username {{OSP_VMBC_DEFAULT_USER}} --password {{OSP_VMBC_DEFAULT_PASS}}"
+    cmd: "vbmc add {{item.key}} --port {{item.value.vbmcport}} --username {{OSP_VMBC_DEFAULT_USER}} --password {{OSP_VMBC_DEFAULT_PASS}} --address {{OSP_LIBVIRT_HOST}}"
   with_dict: "{{OSP_NODES}}"
   ignore_errors: true
 
