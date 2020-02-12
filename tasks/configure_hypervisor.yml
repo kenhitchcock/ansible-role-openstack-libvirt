@@ -1,0 +1,28 @@
+---
+
+#subscription-manager repos --enable=rhel-7-server-openstack-13-rpms
+
+#yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+
+- name: "Install epel repository on hypervisor"
+  yum:
+    name: "{{ item }}"
+    state: present
+  loop: 
+    - https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+
+- name: "Install packages required for overcloud deployment on hypervisor"
+  yum:
+    name: "{{ item }}"
+    state: present
+  loop: 
+    - python2-pip
+
+  
+#pip install virtualbmc
+#pip install --upgrade pip
+
+#virt-install --name ctrl01-overcloud.example.com --memory 16384 --vcpu 8 --cpu host --disk size=60,format=qcow2,bus=virtio --network bridge=virbr0,model=virtio --os-type=linux --pxe --noautoconsole
+
+#vbmc add ctrl01-overcloud.example.com --port 6231 --username admin --password password
+#vbmc start ctrl01-overcloud.example.com
