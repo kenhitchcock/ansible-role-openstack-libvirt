@@ -62,7 +62,7 @@
 - name: "Remove any previous file created."
   file:
     state: absent
-    path: "/tmp/overcloud-nodes/"
+    path: "/tmp/overcloud-nodes"
 
 - name: "Remove any previous instackenv.json file created."
   file:
