@@ -1,9 +1,5 @@
 ---
 
-#subscription-manager repos --enable=rhel-7-server-openstack-13-rpms
-
-#yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
-
 - name: "Install epel repository on hypervisor"
   yum:
     name: "{{ item }}"
@@ -18,7 +14,19 @@
   loop: 
     - python2-pip
 
-  
+- name: "Install virtualbmc"
+  pip:
+    name: virtualbmc
+
+- name: "Create the VM Container from Dict"
+  shell:
+    cmd: "virt-install --name {{item.key}} \
+          --memory {{item.value.memory}} \
+          --vcpu {{item.value.cpu}} --cpu host \
+          --disk size={{item.value.disk}},format=qcow2,bus=virtio \
+          --network bridge={{item.value.network}},model=virtio \
+          --os-type=linux --pxe --noautoconsole"
+  loop: "{{OSP_NODES}}"
 #pip install virtualbmc
 #pip install --upgrade pip
 

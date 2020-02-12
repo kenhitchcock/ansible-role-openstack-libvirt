@@ -1,9 +1,3 @@
 
-- name: "Hypervisor Prep - If using Libvirt"
-  include_tasks: configure_hypervisor.yml
-  when: 
-    - OSP_ON_LIBVIRT is defined
-    - OSP_ON_LIBVIRT == true
-
-- name: "Undercloud Prep"
+- name: "Build VMs"
   include_tasks: configure_undercloud.yml
