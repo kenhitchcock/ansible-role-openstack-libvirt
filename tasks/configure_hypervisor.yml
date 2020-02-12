@@ -13,6 +13,7 @@
     state: present
   loop: 
     - python2-pip
+    - gcc
 
 #pip install virtualbmc
 #pip install --upgrade pip
