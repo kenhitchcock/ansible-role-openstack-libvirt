@@ -43,11 +43,19 @@
     - item.key not in disks.stdout
 
 #vbmc add ctrl01-overcloud.example.com --port 6231 --username admin --password password
+- name: "Check if in VBMC already."
+  shell:
+    cmd: "vbmc list | grep -v 'Domain name' | awk '{print $2}'"
+  register: vbmc_list
+  changed_when: "vbmc_list.rc != 0"
+
 - name: "Create VMBC entries"
   shell:
     cmd: "vbmc add {{item.key}} --port {{item.value.vbmcport}} --username {{OSP_VMBC_DEFAULT_USER}} --password {{OSP_VMBC_DEFAULT_PASS}} --address {{OSP_LIBVIRT_HOST}}"
   with_dict: "{{OSP_NODES}}"
   ignore_errors: true
+  when: 
+    - item.key not in vbmc_list.stdout
 
 #vbmc start ctrl01-overcloud.example.com
 - name: "Create VMBC entries"
