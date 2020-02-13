@@ -47,7 +47,6 @@
   shell:
     cmd: "vbmc list | grep -v 'Domain name' | awk '{print $2}'"
   register: vbmc_list
-  changed_when: "vbmc_list.rc != 0"
 
 - name: "Create VMBC entries"
   shell:
