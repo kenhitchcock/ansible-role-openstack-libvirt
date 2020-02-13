@@ -24,16 +24,23 @@
     name: virtualbmc
 
 #virt-install --name ctrl01-overcloud.example.com --memory 16384 --vcpu 8 --cpu host --disk size=60,format=qcow2,bus=virtio --network bridge=virbr0,model=virtio --os-type=linux --pxe --noautoconsole
+- name: "get VM disks"
+  command: "ls {{ LIBVIRT_VM_DISK_LOC }}"
+  register: disks
+  changed_when: "disks.rc != 0"
+
 - name: "Create the VM Container from Dict"
   shell:
     cmd: "virt-install --name {{item.key}} \
           --memory {{item.value.memory}} \
           --vcpu {{item.value.cpu}} --cpu host \
-          --disk size={{item.value.disk}},format=qcow2,bus=virtio \
+          --disk size={{item.value.disk}},format=qcow2,bus=virtio,pool={{LIBVIRT_STORAGE_POOL}} \
           --network bridge={{item.value.network}},model=virtio \
           --os-type=linux --pxe --noautoconsole"
   with_dict: "{{OSP_NODES}}"
   ignore_errors: true
+  when: 
+    - item.key not in disks.stdout
 
 #vbmc add ctrl01-overcloud.example.com --port 6231 --username admin --password password
 - name: "Create VMBC entries"
