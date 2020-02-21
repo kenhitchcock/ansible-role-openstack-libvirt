@@ -4,7 +4,7 @@ osp_version: "osp13"
 
 OSP_ON_LIBVIRT: false
 LIBVIRT_STORAGE_POOL: "default"
-LIBVIRT_VM_DISK_LOC: "/var/lib/libvirt/"
+LIBVIRT_VM_DISK_LOC: "/var/lib/libvirt/images/"
 undercloud_packages:
   - libguestfs-tools
 

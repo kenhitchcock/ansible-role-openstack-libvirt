@@ -48,7 +48,11 @@
     cmd: "vbmc list | grep -v 'Domain name' | awk '{print $2}'"
   register: vbmc_list
 
-- name: "Create VMBC entries"
+- name: "What entries are in the vbmc list"
+  debug: 
+     msg: "{{vbmc_list.stdout}}"
+
+- name: "Add VMBC entries"
   shell:
     cmd: "vbmc add {{item.key}} --port {{item.value.vbmcport}} --username {{OSP_VMBC_DEFAULT_USER}} --password {{OSP_VMBC_DEFAULT_PASS}} --address {{OSP_LIBVIRT_HOST}}"
   with_dict: "{{OSP_NODES}}"
@@ -57,7 +61,7 @@
     - item.key not in vbmc_list.stdout
 
 #vbmc start ctrl01-overcloud.example.com
-- name: "Create VMBC entries"
+- name: "Start VMBC entries"
   shell:
     cmd: "vbmc start {{item.key}}"
   with_dict: "{{OSP_NODES}}"
@@ -73,34 +77,5 @@
   with_dict: "{{OSP_NODES}}"
   ignore_errors: true
 
-- name: "Remove any previous file created."
-  file:
-    state: absent
-    path: "/tmp/overcloud-nodes"
 
-- name: "Remove any previous instackenv.json file created."
-  file:
-    state: absent
-    path: "/root/instackenv.json"
-
-- name: "Create list of overcloud nodes from dict"
-  shell:
-    cmd: "echo {{item.key}} >>/tmp/overcloud-nodes"
-  with_dict: "{{OSP_NODES}}"
-  ignore_errors: true
-
-- name: "Copy create_instackenv.sh script"
-  copy:
-    src: files/create_instackenv.sh
-    dest: /root/create_instackenv.sh
-    owner: root
-    group: root
-    mode: '0750'
-
-
-- name: "Create instackenv.json"
-  shell:
-    cmd: "./create_instackenv.sh"
-  args:
-    chdir: "/root/"
 
