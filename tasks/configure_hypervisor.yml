@@ -36,6 +36,7 @@
           --vcpu {{item.value.cpu}} --cpu host \
           --disk size={{item.value.disk}},format=qcow2,bus=virtio,pool={{LIBVIRT_STORAGE_POOL}} \
           --network bridge={{item.value.network}},model=virtio \
+          --network network={{OSP_LIBVIRT_NET}},model=virtio \
           --os-type=linux --pxe --noautoconsole"
   with_dict: "{{OSP_NODES}}"
   ignore_errors: true

@@ -14,6 +14,7 @@ OSP_DEFAULT_ROOT_PASS: "password"
 OSP_VMBC_DEFAULT_USER: "admin"
 OSP_VMBC_DEFAULT_PASS: "password"
 OSP_LIBVIRT_HOST: 192.168.122.1
+OSP_LIBVIRT_NET: "openstack"
 
 OSP_NODES:
   - controller-0.example.com:
