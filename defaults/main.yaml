@@ -5,8 +5,14 @@ osp_version: "osp13"
 OSP_ON_LIBVIRT: false
 LIBVIRT_STORAGE_POOL: "default"
 LIBVIRT_VM_DISK_LOC: "/var/lib/libvirt/images/"
+
 undercloud_packages:
   - libguestfs-tools
+
+pip_packages:
+  - configparser
+  - unicodecsv
+  - virtualbmc
 
 OSP_IRONIC_TAR: "/usr/share/rhosp-director-images/overcloud-full-latest-13.0.tar"
 OSP_IMAGES_TAR: "/usr/share/rhosp-director-images/ironic-python-agent.tar"
